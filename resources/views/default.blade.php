@@ -24,7 +24,7 @@
 
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 	<!-- Perfect -->
-	<link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('admin/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('admin/css/app-skin.css') }}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.12/css/bootstrap/zebra_datepicker.min.css">
@@ -45,22 +45,31 @@
 	<div id="wrapper" class="preload">
 		<div id="top-nav" class="fixed skin-6">
 			<a href="#" class="brand">
-				<span class="text-toggle"> {{ config('app.name') }}: Admin</span>
+				<span class="text-toggle"> PMJAY Claims</span>
 			</a><!-- /brand -->
-			<button type="button" class="navbar-toggle pull-left" id="sidebarToggle">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<button type="button" class="navbar-toggle pull-left hide-menu" id="menuToggle">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
+
+			<ul class="nav-notification clearfix">
+	  			 <li class="dropdown">
+					<a class="dropdown-toggle" href="{{ route('home') }}">
+						<i class="fa fa-rss" aria-hidden="true"></i> HOME
+					</a>
+				</li>
+	          	<li class="dropdown">
+					<a class="dropdown-toggle"  href="{{ route('float_data.upload') }}" title="Upload Float File">
+						<i class="fa fa-reply-all" aria-hidden="true"></i> Upload New Float File
+					</a>
+				</li>
+
+				<li class="dropdown">
+					<a class="dropdown-toggle"  href="{{ route('hospital.index') }}" title="Hospital List">
+						<i class="fa fa-reply-all" aria-hidden="true"></i> Hospital List
+					</a>
+				</li>
+   			</ul>
+
 		</div><!-- /top-nav-->
 
 		<aside class="fixed skin-6">
-			@include('common.sidebar_nav')
 		</aside>
 
 		<div id="main-container">
@@ -165,6 +174,11 @@
 
 	<script>
 		$( document ).ready(function() {
+
+			$('#wrapper').toggleClass('sidebar-hide');
+			$('.main-menu').find('.openable').removeClass('open');
+			$('.main-menu').find('.submenu').removeAttr('style');
+
 		    $('.datepicker').Zebra_DatePicker({
 		    	direction: 0
 		    });

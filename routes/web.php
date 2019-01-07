@@ -34,4 +34,5 @@ Route::group(['prefix' => 'hospital'], function () {
 	Route::get('/', 'HospitalsController@index')->name('hospital.index');
 	Route::get('/{id}/edit', 'HospitalsController@edit')->name('hospital.edit');
 	Route::post('/{id}/update', 'HospitalsController@update')->name('hospital.update');
+  Route::get('/{id}', 'HospitalsController@viewHospitalDetails')->name('hospital.details');
 });

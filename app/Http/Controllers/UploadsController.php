@@ -23,33 +23,40 @@ class UploadsController extends Controller
     	
 
 		for($i = 0; $i < count($data); $i++) {
-	    	foreach($data[$i] as $k => $v) {
-	    		$hospital_name 	= trim($v['hospital_name']);
-				$hospital_name 	= trim(str_replace('-PMJAY', '', $hospital_name));
-				$hospital_name 	= trim(str_replace('- PMJAY', '', $hospital_name));
-				$hospital_name 	= trim(str_replace('-pmjay', '', $hospital_name));
+	    	foreach($data[$i] as $k => $v) { //dd($v);
+	    		if(isset($v['hospital_name'])){
+		    		$hospital_name 	= trim($v['hospital_name']);
+					$hospital_name 	= trim(str_replace('-PMJAY', '', $hospital_name));
+					$hospital_name 	= trim(str_replace('- PMJAY', '', $hospital_name));
+					$hospital_name 	= trim(str_replace('-pmjay', '', $hospital_name));
 
-				if($v['hospital_name'] != 'Aditya Diagnostic & Hospital Dibrugarh') {
-					$hospital_name 	= trim(str_replace('& Hospital', '', $hospital_name));
-				}
-				
+					if($v['hospital_name'] != 'Aditya Diagnostic & Hospital Dibrugarh') {
+						$hospital_name 	= trim(str_replace('& Hospital', '', $hospital_name));
+					}
+					
 
-				if($hospital_name == 'Holly Spirit Hospital') {
-					$hospital_name = 'Holy Spirit Hospital';
-				}
+					if($hospital_name == 'Holly Spirit Hospital') {
+						$hospital_name = 'Holy Spirit Hospital';
+					}
 
 
-				if($hospital_name == 'Dims has changed to GATE Hospital') {
-					$hospital_name = 'GATE Hospital';
-				}
+					if($hospital_name == 'Dims has changed to GATE Hospital') {
+						$hospital_name = 'GATE Hospital';
+					}
 
-				$hospital = Hospital::where('name', 'like', '%' . $hospital_name . '%')->first();
+					$hospital = Hospital::where('name', 'like', '%' . $hospital_name . '%')->first();
 
-				if(!$hospital) {
-					return Redirect::back()->with(['message' => 'Hospital '.$hospital_name.' not found !', 'alert-class' => 'alert-danger']);
+					if(!$hospital) {
+						return Redirect::back()->with(['message' => 'Hospital '.$hospital_name.' not found !', 'alert-class' => 'alert-danger']);
+					}
+				}else{
+					echo $i.' sheet error ';
+					exit;
 				}
 	    	}
 	    }
+
+	   // exit;
 
     	/*dump(count($data));
     	dd($data);*/
@@ -85,7 +92,7 @@ class UploadsController extends Controller
     	$float_file = FloatFile::create($filename_date);
 
     	for($i = 0; $i < count($data); $i++) {
-	    	foreach($data[$i] as $k => $v) {
+	    	foreach($data[$i] as $k => $v) { 
 	    		if($v['hospital_name'] != '') {
 
 	    			$utr = '';
@@ -133,7 +140,8 @@ class UploadsController extends Controller
 		    			
 		    			if(isset($v['gross_bill'])) {
 		    				$float_data['gross_bill'] 			= (float) $v['gross_bill'];
-		    			}else{
+		    			}
+		    			if(isset($v['gross_amount'])) {
 		    				$float_data['gross_bill'] 			= (float) $v['gross_amount'];
 		    			}
 		    			
@@ -141,7 +149,11 @@ class UploadsController extends Controller
 		    			$float_data['tds'] 					= (float) $v['tds_amount_10_rs'];
 		    			$float_data['net_amount'] 			= (float) $v['net_amount'];
 
-		    			$float_data['date_of_payment'] 		= Carbon::parse($v['dop'])->format('Y-m-d');
+		    			$float_data['date_of_payment'] 		= date('Y-m-d', strtotime(str_replace('/', '-', $v['dop'])));
+		    			//Carbon::parse($v['dop'])->format('Y-m-d');
+
+		    			//$float_data['date_of_payment'] 		= Carbon::parse($v['dop'])->format('Y-m-d');
+
 		    			$float_data['utr_number'] 			= $utr;
 
 		    			$validator = Validator::make($float_data, ClaimFloat::$rules);
