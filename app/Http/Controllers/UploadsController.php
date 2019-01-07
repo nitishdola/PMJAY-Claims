@@ -19,6 +19,38 @@ class UploadsController extends Controller
     	$path = $request->file('data_file')->getRealPath();
     	$data = Excel::load($path, function($reader) {})->get();
 
+
+    	
+
+		for($i = 0; $i < count($data); $i++) {
+	    	foreach($data[$i] as $k => $v) {
+	    		$hospital_name 	= trim($v['hospital_name']);
+				$hospital_name 	= trim(str_replace('-PMJAY', '', $hospital_name));
+				$hospital_name 	= trim(str_replace('- PMJAY', '', $hospital_name));
+				$hospital_name 	= trim(str_replace('-pmjay', '', $hospital_name));
+
+				if($v['hospital_name'] != 'Aditya Diagnostic & Hospital Dibrugarh') {
+					$hospital_name 	= trim(str_replace('& Hospital', '', $hospital_name));
+				}
+				
+
+				if($hospital_name == 'Holly Spirit Hospital') {
+					$hospital_name = 'Holy Spirit Hospital';
+				}
+
+
+				if($hospital_name == 'Dims has changed to GATE Hospital') {
+					$hospital_name = 'GATE Hospital';
+				}
+
+				$hospital = Hospital::where('name', 'like', '%' . $hospital_name . '%')->first();
+
+				if(!$hospital) {
+					return Redirect::back()->with(['message' => 'Hospital '.$hospital_name.' not found !', 'alert-class' => 'alert-danger']);
+				}
+	    	}
+	    }
+
     	/*dump(count($data));
     	dd($data);*/
     	DB::beginTransaction();
@@ -87,7 +119,7 @@ class UploadsController extends Controller
 		    		if($hospital) {
 		    			
 		    			$float_data['float_file_id'] 		= $float_file->id;
-		    			$float_data['float_serial_number'] 	= (int) $v['float_sl._no'];
+		    			$float_data['float_serial_number'] 	= $v['float_sl._no'];
 		    			$float_data['patient_name'] 		= $v['patient_name'];
 		    			if($district):
 		    			$float_data['beneficiary_district_id'] 			= $district->id;

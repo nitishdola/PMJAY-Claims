@@ -187,8 +187,17 @@ class MailsController extends Controller
         $float_file = FloatFile::find($float_file_id);
     	//$email = $request->email;
 
-        //$email = 'finance.aaasassam@gmail.com';
-        $email = 'nitish.dola@gmail.com';
+        $hospital = Hospital::find($hospital_id);
+
+        $emails = $hospital->email;
+
+        $email_arr = explode('/', $emails);
+
+        //$email = $email_arr[0];
+
+
+        $email = 'finance.aaasassam@gmail.com';
+        //$email = 'nitish.dola@gmail.com';
 
         $hospital_name = ucwords(Hospital::find($hospital_id)->name);
 
@@ -206,7 +215,7 @@ class MailsController extends Controller
 
             $message->to($email);
 
-            //$message->cc(['nitish.dola@gmail.com', 'it.sncassam@gmail.com']);
+            $message->cc(['nitish.dola@gmail.com', 'it.sncassam@gmail.com']);
 
             $message->attach(public_path('excel/exports/'.$sheetname.'.xls'), [
                 'as' => $hospital_name.'.xls',
