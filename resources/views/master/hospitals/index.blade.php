@@ -11,6 +11,35 @@
 
 
 <div class="panel panel-default table-responsive">
+
+	<div class="row">
+		{!! Form::open(array('route' => 'hospital.index', 'class' => 'form-horizontal', 'method' => 'GET')) !!}
+			<br><br>
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="textinput">Hospital Type</label>  
+			  <div class="col-md-4">
+
+			  	<?php 
+			  	$hospital_types['Public'] = 'Public'; 
+			  	$hospital_types['Trust'] = 'Trust'; 
+			  	$hospital_types['Private'] = 'Private'; 
+			  	?>
+			 {!! Form::select('hospital_type', $hospital_types, null, ['class' => 'form-control required col-md-5', 'id' => 'name', 'placeholder' => 'Hospital Type', 'required' => true, 'autocomplete' => 'off']) !!} 
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="textinput"></label>  
+			  <div class="col-md-4">
+			  	<button type="submit" class="btn btn-sm btn-primary">
+					<i class="fa fa-dot-circle-o"></i> Search</button>
+			  </div>
+			</div>
+
+			
+		
+		{!! Form::close() !!}
+	</div>
 	<div class="panel-heading">
 		Hospitals
 		<span class="label label-info pull-right">{{ count($results) }} Items</span>

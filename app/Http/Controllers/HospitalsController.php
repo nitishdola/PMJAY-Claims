@@ -10,8 +10,14 @@ use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon, Mail;
 use App\Models\FloatFile, App\Models\ClaimFloat;
 class HospitalsController extends Controller
 {
-    public function index() {
-    	$results = Hospital::orderBy('name')->get();
+    public function index(Request $request) {
+        $where['status'] = 1;
+
+        if($request->hospital_type) {
+            $where['hospital_type'] = $request->hospital_type;
+        }
+
+    	$results = Hospital::where($where)->orderBy('name')->get();
     	return view('master.hospitals.index', compact('results'));
     }
 
