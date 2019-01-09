@@ -100,6 +100,12 @@ class UploadsController extends Controller
 	    				$utr = $v['utr_no.'];
 	    			}
 
+	    			$remarks = '';
+	    			if(isset($v['remarks.'])) {
+	    				$remarks = $v['remarks.'];
+	    			}
+
+
 		    		$hospital_name 	= trim($v['hospital_name']);
 		    		$hospital_name 	= trim(str_replace('-PMJAY', '', $hospital_name));
 		    		$hospital_name 	= trim(str_replace('- PMJAY', '', $hospital_name));
@@ -155,6 +161,7 @@ class UploadsController extends Controller
 		    			//$float_data['date_of_payment'] 		= Carbon::parse($v['dop'])->format('Y-m-d');
 
 		    			$float_data['utr_number'] 			= $utr;
+		    			$float_data['remarks'] 				= $remarks;
 
 		    			$validator = Validator::make($float_data, ClaimFloat::$rules);
 		    			if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();

@@ -102,7 +102,7 @@
 		</div><!-- /main-container -->
 		<!-- Footer
 		================================================== -->
-		<footer>
+		<!-- <footer>
 			<div class="row">
 				<div class="col-sm-6">
 					<span class="footer-brand">
@@ -111,9 +111,9 @@
 					<p class="no-margin">
 						Made with <i class="fa fa-heartbeat" aria-hidden="true"></i> by <strong>Nitish D.</strong>
 					</p>
-				</div><!-- /.col -->
-			</div><!-- /.row-->
-		</footer>
+				</div>
+			</div>
+		</footer> -->
 
 
 	<a href="#" id="scroll-to-top" class="hidden-print"><i class="fa fa-chevron-up"></i></a>

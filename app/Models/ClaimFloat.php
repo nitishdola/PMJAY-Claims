@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClaimFloat extends Model
 {
     protected $fillable = array(
-    	'float_file_id', 'float_serial_number', 'patient_name', 'beneficiary_district_id', 'hospital_id', 'tpa_claim_reference_number', 'date_of_admission', 'date_of_discharge', 'gross_bill', 'deduction', 'tds', 'net_amount', 'date_of_payment','utr_number'
+    	'float_file_id', 'float_serial_number', 'patient_name', 'beneficiary_district_id', 'hospital_id', 'tpa_claim_reference_number', 'date_of_admission', 'date_of_discharge', 'gross_bill', 'deduction', 'tds', 'net_amount', 'date_of_payment','utr_number', 'remarks'
 
     );
 

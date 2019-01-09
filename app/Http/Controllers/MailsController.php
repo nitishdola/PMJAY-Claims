@@ -20,9 +20,10 @@ class MailsController extends Controller
     public function viewFloatHospitals(Request $request, $float_file_id) {
     	$float_file = FloatFile::find($float_file_id);
         //dd($float_file);
-    	$all_hospitals = ClaimFloat::where('float_file_id', $float_file_id)->select('hospital_id', 'date_of_payment', 'mail_sent', 'mail_sent_on')->distinct()->get();
+    	$all_hospitals = ClaimFloat::where('float_file_id', $float_file_id)->select('hospital_id', 'date_of_payment', 'mail_sent', 'mail_sent_on', 'id')->distinct()->get();
     	$hospitals = [];
     	foreach($all_hospitals as $k => $v) {
+            $hospitals[$k]['id']    = $v->id;
     		$hospitals[$k]['hospital_id'] 	= $v->hospital_id;
     		$hospital = Hospital::find($v->hospital_id);
     		$hospitals[$k]['hospital_name'] = $hospital->name; 

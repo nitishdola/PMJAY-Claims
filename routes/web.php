@@ -18,6 +18,10 @@ Route::group(['prefix' => 'float-data'], function () {
   Route::get('/upload', 'UploadsController@uploadData')->name('float_data.upload');
   Route::post('/save', 'UploadsController@saveAllData')->name('float_data.save');
 
+
+  Route::get('/edit/{id}', 'ClaimFloatsController@edit')->name('claim_float.edit');
+  Route::post('/update/{id}', 'ClaimFloatsController@update')->name('claim_float.update');
+
   Route::group(['prefix' => 'mail'], function () {
     Route::get('/fresh-floats', 'MailsController@viewFreshFloats')->name('mail.fresh_float_view');
     Route::get('/view-hospitals/{float_file_id}', 'MailsController@viewFloatHospitals')->name('mail.fresh_float.hospital_view');

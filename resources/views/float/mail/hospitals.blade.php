@@ -28,6 +28,7 @@
 					<th>TDS</th>
 					<th>Net Amount</th>
 					<th>Date of Payment</th>
+					<th>Edit</th>
 					<!-- <th width="20%">Make Excel</th> -->
 					<th>Send Mail</th>
 				</tr>
@@ -78,6 +79,7 @@
 						<td>{{ $tds }}</td>
 						<td>{{ $net }}</td>
 						<td>{{ date('d-m-Y', strtotime($v['date_of_payment'])) }}</td>
+						<td><a href="{{ route('claim_float.edit', $v['id']) }}" target="_blank" class="btn btn-xs btn-warning"> Edit</a></td>
 						<!-- <td><a href="{{ route('mail.fresh_float.make_excel', [$float_file->id, $v['hospital_id'] ]) }}" target="_blank" class="btn btn-xs btn-primary">Make Excel</a></td> -->
 
 						<td>
