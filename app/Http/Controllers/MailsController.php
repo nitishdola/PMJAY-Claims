@@ -97,6 +97,7 @@ class MailsController extends Controller
 			$arr[$k1]['Net Amount'] = (float) number_format((float)$net, 2, '.', '');
             $arr[$k1]['Date of Payment'] = date('d-m-Y', strtotime($v1->date_of_payment));
             $arr[$k1]['UTR Number'] = $v1->utr_number;
+            $arr[$k1]['Remarks'] = $v1->remarks;
 
             $total_gross += $gross;
             $total_deduction += $dd;
@@ -123,11 +124,11 @@ class MailsController extends Controller
             $excel->sheet('All', function($sheet) use($arr, $count, $float_file_name, $hosp_nm){
               $sheet->setTitle($hosp_nm);
 
-            $sheet->cells('A'.($count+1).':N1'.($count+1), function($cells) {
+            $sheet->cells('A'.($count+1).':O1'.($count+1), function($cells) {
                 $cells->setFontWeight('bold');
             });
 
-            $sheet->cells('A1:N1', function($cells) {
+            $sheet->cells('A1:O1', function($cells) {
                 $cells->setFontWeight('bold');
             });
 
@@ -147,6 +148,7 @@ class MailsController extends Controller
                 'L'     =>  10,
                 'M'     =>  15,
                 'N'     =>  15,
+                'O'     =>  30,
             ));
             $sheet->getStyle('A1')->getAlignment()->setWrapText(true);
             $sheet->getStyle('B1')->getAlignment()->setWrapText(true);
@@ -159,13 +161,14 @@ class MailsController extends Controller
             $sheet->getStyle('L1')->getAlignment()->setWrapText(true);
             $sheet->getStyle('M1')->getAlignment()->setWrapText(true);
             $sheet->getStyle('N1')->getAlignment()->setWrapText(true);
+            $sheet->getStyle('O1')->getAlignment()->setWrapText(true);
               
             
             $sheet->row(1, function($row) { $row->setBackground('#B5DF6B'); });
 
             $sheet->row(($count+1), function($row) { $row->setBackground('#F9F116'); });
 
-            $range = "A1:N".($count+2);
+            $range = "A1:O".($count+2);
             //$sheet->setBorder($range, 'thin');
 
             $sheet->setAllBorders('thin');
