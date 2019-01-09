@@ -197,10 +197,10 @@ class MailsController extends Controller
 
         $email_arr = explode('/', $emails);
 
-        //$email = $email_arr[0];
+        $email = $email_arr[0];
 
 
-        $email = 'finance.aaasassam@gmail.com';
+        //$email = 'finance.aaasassam@gmail.com';
         
         if($email != ''){
 
@@ -216,11 +216,11 @@ class MailsController extends Controller
                 $mail = Mail::send('mail.send_hospital_mail', ['hospital_name' => $hospital_name, 'float_number' => $float_number], function ($message) use($email, $sheetname, $hospital_name,$payment_advice_file)
                 {
 
-                    $message->from('it.sncassam@gmail.com', 'SHA Assam');
+                    $message->from('finance.aaasassam@gmail.com', 'SHA Assam');
 
                     $message->to($email);
 
-                    $message->cc(['nitish.dola@gmail.com', 'it.sncassam@gmail.com']);
+                    $message->cc(['finance.aaasassam@gmail.com', 'it.sncassam@gmail.com']);
 
                     $message->attach(public_path('excel/exports/'.$sheetname.'.xls'), [
                         'as' => $hospital_name.'.xls',
