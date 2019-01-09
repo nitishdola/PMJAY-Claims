@@ -197,59 +197,63 @@ class MailsController extends Controller
 
 
         $email = 'finance.aaasassam@gmail.com';
-        //$email = 'nitish.dola@gmail.com';
+        
+        if($email != ''){
 
-        $hospital_name = ucwords(Hospital::find($hospital_id)->name);
+                $hospital_name = ucwords(Hospital::find($hospital_id)->name);
 
-        $sheetname = $this->makeExcel($float_file_id, $hospital_id);
+                $sheetname = $this->makeExcel($float_file_id, $hospital_id);
 
-        $payment_advice_file = $float_file->payment_advice_file_path;
+                $payment_advice_file = $float_file->payment_advice_file_path;
 
-        $float_number = $float_file->float_number;
-//dd($float_file->float_number);
+                $float_number = $float_file->float_number;
+        //dd($float_file->float_number);
 
-        $mail = Mail::send('mail.send_hospital_mail', ['hospital_name' => $hospital_name, 'float_number' => $float_number], function ($message) use($email, $sheetname, $hospital_name,$payment_advice_file)
-        {
+                $mail = Mail::send('mail.send_hospital_mail', ['hospital_name' => $hospital_name, 'float_number' => $float_number], function ($message) use($email, $sheetname, $hospital_name,$payment_advice_file)
+                {
 
-            $message->from('it.sncassam@gmail.com', 'SHA Assam');
+                    $message->from('it.sncassam@gmail.com', 'SHA Assam');
 
-            $message->to($email);
+                    $message->to($email);
 
-            $message->cc(['nitish.dola@gmail.com', 'it.sncassam@gmail.com']);
+                    $message->cc(['nitish.dola@gmail.com', 'it.sncassam@gmail.com']);
 
-            $message->attach(public_path('excel/exports/'.$sheetname.'.xls'), [
-                'as' => $hospital_name.'.xls',
-                'mime' => 'application/vnd.ms-excel'
-            ]);
+                    $message->attach(public_path('excel/exports/'.$sheetname.'.xls'), [
+                        'as' => $hospital_name.'.xls',
+                        'mime' => 'application/vnd.ms-excel'
+                    ]);
 
-            if($payment_advice_file) {
-                $message->attach(public_path($payment_advice_file), [
-                    'as' => 'Payment_Advice.pdf',
-                    'mime' => 'application/pdf'
-                ]);
-            }
+                    if($payment_advice_file) {
+                        $message->attach(public_path($payment_advice_file), [
+                            'as' => 'Payment_Advice.pdf',
+                            'mime' => 'application/pdf'
+                        ]);
+                    }
 
-            
+                    
 
-            $message->subject('Payment Details of '.$hospital_name);
+                    $message->subject('Payment Details of '.$hospital_name);
 
-        });
+                });
 
-        $float = ClaimFloat::where(['float_file_id' => $float_file_id, 'hospital_id' => $hospital_id])->first();
+            $float = ClaimFloat::where(['float_file_id' => $float_file_id, 'hospital_id' => $hospital_id])->first();
 
-        $float->mail_sent = 1;
-        $float->mail_sent_on = date('Y-m-d H:i:s');
-        $float->save();
+            $float->mail_sent = 1;
+            $float->mail_sent_on = date('Y-m-d H:i:s');
+            $float->save();
 
         
-        $float_file_check = ClaimFloat::where('float_file_id', $float_file_id)->where('mail_sent', 1)->count();
+            $float_file_check = ClaimFloat::where('float_file_id', $float_file_id)->where('mail_sent', 1)->count();
 
-        if($float_file_check) {
-            $float_file = FloatFile::find($float_file_id);
-            $float_file->mail_time = date('Y-m-d H:i:s');
-            $float_file->save();
+            if($float_file_check) {
+                $float_file = FloatFile::find($float_file_id);
+                $float_file->mail_time = date('Y-m-d H:i:s');
+                $float_file->save();
+            }
+            return 1;
+        }else{
+            return 'Email not found !';
         }
-        return 1;
     }
 
     private function clean($string) {

@@ -142,9 +142,14 @@ function sendMail(hospital_id, email, float_file_id) {
 		},
 
 		success : function(resp) {
-			console.log(resp);
-			$('#send_mail_loading_btn_'+hospital_id).hide();
-			$('#send_mail_sent_btn_'+hospital_id).show();
+			if(resp == 1) {
+				$('#send_mail_loading_btn_'+hospital_id).hide();
+				$('#send_mail_sent_btn_'+hospital_id).show();
+			}else{
+				alert(resp);
+				$('#send_mail_btn_'+hospital_id).show();
+			}
+			
 		}
 	});
 
