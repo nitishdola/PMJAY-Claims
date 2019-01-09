@@ -20,20 +20,19 @@ class MailsController extends Controller
     public function viewFloatHospitals(Request $request, $float_file_id) {
     	$float_file = FloatFile::find($float_file_id);
         //dd($float_file);
-    	$all_hospitals = ClaimFloat::where('float_file_id', $float_file_id)->select('hospital_id', 'date_of_payment', 'mail_sent', 'mail_sent_on', 'id')->distinct()->get();
-    	$hospitals = [];
-    	foreach($all_hospitals as $k => $v) {
-            $hospitals[$k]['id']    = $v->id;
-    		$hospitals[$k]['hospital_id'] 	= $v->hospital_id;
-    		$hospital = Hospital::find($v->hospital_id);
-    		$hospitals[$k]['hospital_name'] = $hospital->name; 
-            $hospitals[$k]['hospital_email'] = $hospital->email; 
-            $hospitals[$k]['date_of_payment'] = $v->date_of_payment;
-            $hospitals[$k]['mail_sent'] = $v->mail_sent;
-    		$hospitals[$k]['mail_sent_on'] = $v->mail_sent_on;
-    	}
-    	//dd($hospitals);
-    	return view('float.mail.hospitals', compact('hospitals', 'float_file_id', 'float_file'));
+    	//$all_hospitals = ClaimFloat::where('float_file_id', $float_file_id)->select('hospital_id', 'date_of_payment', 'mail_sent', 'mail_sent_on', 'id')->distinct()->get();
+
+
+        $all_hospitals = ClaimFloat::where('float_file_id', $float_file_id)->select('hospital_id')->distinct()->get()->toArray();
+
+        
+
+        $hospitals = Hospital::whereIn('id', $all_hospitals)->get()->toArray();
+        //dd($hospitals);
+
+    	
+
+    	return view('float.mail.hospitals', compact('hospitals', 'float_file'));
     }
 
     public function makeExcel( $float_file_id, $hospital_id) {
@@ -197,10 +196,11 @@ class MailsController extends Controller
 
         $email_arr = explode('/', $emails);
 
-        $email = $email_arr[0];
+        //$email = $email_arr[0];
 
 
         //$email = 'finance.aaasassam@gmail.com';
+        $email = 'nitish.dola@gmail.com';
         
         if($email != ''){
 
@@ -220,7 +220,7 @@ class MailsController extends Controller
 
                     $message->to($email);
 
-                    $message->cc(['finance.aaasassam@gmail.com', 'it.sncassam@gmail.com']);
+                   // $message->cc(['finance.aaasassam@gmail.com', 'it.sncassam@gmail.com']);
 
                     $message->attach(public_path('excel/exports/'.$sheetname.'.xls'), [
                         'as' => $hospital_name.'.xls',

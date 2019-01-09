@@ -27,9 +27,7 @@
 					<th>Deduction</th>
 					<th>TDS</th>
 					<th>Net Amount</th>
-					<th>Date of Payment</th>
-					<th>Edit</th>
-					<!-- <th width="20%">Make Excel</th> -->
+					
 					<th>Send Mail</th>
 				</tr>
 
@@ -39,22 +37,21 @@
 			?>
 			<tbody>
 				@foreach($hospitals as $k => $v)
+				<?php 
+					$hospital_id = $v['id']; 
+					$hospital = DB::table('hospitals')->where('id', $hospital_id)->first();
+				?>
 					<tr>
 						<td>{{ $k+1 }}</td>
-						<td>{{ $v['hospital_name'] }} <br> {{ $v['hospital_email'] }}</td>
+						<td>{{ $hospital->name }} <br> {{ $hospital->email }}</td>
 
 						<?php 
-							$hospital_id = $v['hospital_id'];
-							$hospital_email = $v['hospital_email'];
+							$hospital_email = $hospital->email;
 
 							$gross = $deduction = $tds = $net = 0;
 							$hospital_data = DB::table('floats')
 											->where('float_file_id', $float_file_id)
-											->where('hospital_id', $v['hospital_id'])
-											/*->sum('gross_bill')
-											->sum('deduction')
-											->sum('tds')
-											->sum('net_amount')*/
+											->where('hospital_id', $v['id'])
 											->get();
 
 							foreach($hospital_data as $k1 => $v1) {
@@ -70,6 +67,9 @@
 								$net 		+= (float) $v1->net_amount;
 								$all_net 		+= (float) $v1->net_amount;
 							}
+
+
+							//claim float
 						?>
 
 						<td>{{ count($hospital_data) }}</td>
@@ -78,23 +78,17 @@
 						<td>{{ $deduction }}</td>
 						<td>{{ $tds }}</td>
 						<td>{{ $net }}</td>
-						<td>{{ date('d-m-Y', strtotime($v['date_of_payment'])) }}</td>
-						<td><a href="{{ route('claim_float.edit', $v['id']) }}" target="_blank" class="btn btn-xs btn-warning"> Edit</a></td>
-						<!-- <td><a href="{{ route('mail.fresh_float.make_excel', [$float_file->id, $v['hospital_id'] ]) }}" target="_blank" class="btn btn-xs btn-primary">Make Excel</a></td> -->
+						
 
 						<td>
-							@if(!$v['mail_sent'])
+							
 							<button id="send_mail_btn_{{$hospital_id}}" class="btn btn-xs btn-danger send_mail" onclick="sendMail({{ $hospital_id }}, '{{ $hospital_email }}', {{ $float_file_id }})">Send Mail <br>to Hospital</button>
 
 							<button style="display: none;" id="send_mail_loading_btn_{{$hospital_id}}" class="btn btn-primary btn-sm"><i class="fa fa-spinner fa-spin"></i> Sending Mail</button>
 
 
 							<button style="display: none;" id="send_mail_sent_btn_{{$hospital_id}}" class="btn btn-success btn-sm"><i class="fa fa-check-square" aria-hidden="true"></i> Mail Sent</button>
-							@else
-
-								Mail Already Sent
-
-							@endif
+							
 
 						</td>
 					</tr>
