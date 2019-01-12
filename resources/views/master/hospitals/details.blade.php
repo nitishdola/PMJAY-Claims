@@ -18,6 +18,17 @@
 			</div>
 			<div class="padding-md clearfix">
 				@if(count($hospital_details))
+				<div class="row" style="margin-bottom: 20px;">
+					<div class="col-md-1">
+						<a href="{{ route('hospital.pdf.export', $hospital->id) }}" target="_blank" class="btn btn-xs btn-danger"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Export to PDF</a>
+					</div>
+
+					<div class="col-md-2">
+						<a href="{{ route('hospital.excel.export', $hospital->id) }}" target="_blank" class="btn btn-xs btn-warning"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Export to Excel</a>
+					</div>
+
+					
+				</div>
 				<table class="table table-bordered table-condensed" id="dataTablea">
 					<thead>
 						<tr>
@@ -81,11 +92,7 @@
 					</tfoot>
 				</table>
 
-				<div class="row">
-					<div class="col-md-12">
-						<a href="{{ route('hospital.pdf.export', $hospital->id) }}" target="_blank"> Export to PDF</a>
-					</div>
-				</div>
+				
 				@else
 				<div class="alert alert-warning">
 					<h3>NO PAYMENTS FOUND</h3>

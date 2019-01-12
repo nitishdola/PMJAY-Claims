@@ -42,5 +42,6 @@ Route::group(['prefix' => 'hospital'], function () {
 
   Route::group(['prefix' => 'export'], function () {
     Route::get('/pdf/{id}', 'HospitalsController@exportToPdf')->name('hospital.pdf.export');
+    Route::get('/excel/{id}', 'HospitalsController@exportToExcel')->name('hospital.excel.export');
   });
 });
