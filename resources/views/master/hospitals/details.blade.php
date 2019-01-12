@@ -80,6 +80,12 @@
 						</tr>
 					</tfoot>
 				</table>
+
+				<div class="row">
+					<div class="col-md-12">
+						<a href="{{ route('hospital.pdf.export', $hospital->id) }}" target="_blank"> Export to PDF</a>
+					</div>
+				</div>
 				@else
 				<div class="alert alert-warning">
 					<h3>NO PAYMENTS FOUND</h3>
