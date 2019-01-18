@@ -39,4 +39,9 @@ Route::group(['prefix' => 'hospital'], function () {
 	Route::get('/{id}/edit', 'HospitalsController@edit')->name('hospital.edit');
 	Route::post('/{id}/update', 'HospitalsController@update')->name('hospital.update');
   Route::get('/{id}', 'HospitalsController@viewHospitalDetails')->name('hospital.details');
+
+  Route::group(['prefix' => 'export'], function () {
+    Route::get('/pdf/{id}', 'HospitalsController@exportToPdf')->name('hospital.pdf.export');
+    Route::get('/excel/{id}', 'HospitalsController@exportToExcel')->name('hospital.excel.export');
+  });
 });

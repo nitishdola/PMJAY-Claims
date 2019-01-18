@@ -23,6 +23,7 @@
 					<th>SL</th>
 					<th>File Name</th>
 					<th>Float Number</th>
+					<th>Mail Status</th>
 					<th>Upload Time</th>
 				</tr>
 
@@ -30,10 +31,19 @@
 
 			<tbody>
 				@foreach($results as $k => $v)
-					<tr>
+					<tr @if($v->mail_time) class="alert alert-success" @endif>
 						<td>{{ $k+1 }}</td>
 						<td><a href="{{ route('mail.fresh_float.hospital_view', $v->id ) }}" target="_blank"> {{ $v->name }}</a></td>
 						<td><a href="{{ route('mail.fresh_float.hospital_view', $v->id ) }}" target="_blank"> {{ $v->float_number }}</a></td>
+
+						<td>
+							@if($v->mail_time) 
+								Mail Sent on {{ date('d-m-Y h:i', strtotime($v->mail_time))}}
+							@else
+								Mail Not Sent
+							@endif
+						</td>
+
 						<td>{{ date('d-m-Y h:i A', strtotime($v->upload_time)) }}</td>
 
 					</tr>
