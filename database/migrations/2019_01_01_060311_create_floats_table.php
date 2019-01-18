@@ -35,8 +35,6 @@ class CreateFloatsTable extends Migration
             $table->timestamps();
 
             $table->foreign('float_file_id')->references('id')->on('float_files');
-            $table->foreign('beneficiary_district_id')->references('id')->on('districts');
-            $table->foreign('hospital_id')->references('id')->on('hospitals');
         });
     }
 
