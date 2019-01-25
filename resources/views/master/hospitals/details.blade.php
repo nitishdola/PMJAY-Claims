@@ -46,6 +46,7 @@
 							<th>Net Amount</th>
 							<th>Date of Payment</th>
 							<th>UTR Number</th>
+							<th>Remarks</th>
 						</tr>
 
 					</thead>
@@ -68,6 +69,7 @@
 								<td>{{ $v->net_amount }}</td>
 								<td>{{ date('d-m-Y', strtotime($v->date_of_payment)) }}</td>
 								<td>{{ $v->utr_number }}</td>
+								<td>{{ $v->remarks }}</td>
 
 								<?php 
 									$net_amount += $v->net_amount; 
