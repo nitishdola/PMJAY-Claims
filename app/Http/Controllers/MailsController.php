@@ -196,11 +196,17 @@ class MailsController extends Controller
 
         $email_arr = explode('/', $emails);
 
-        //$email = $email_arr[0];
+        $email = $email_arr[0];
 
+        $cc = []; 
 
+        if(env('TEST_MAIL') != '') {
+            $email = 'nitish.dola@gmail.com';
+        }else{
+            $cc = ['finance.aaasassam@gmail.com', 'sthapa@mdindia.com'];
+        }
         //$email = 'finance.aaasassam@gmail.com';
-        $email = 'nitish.dola@gmail.com';
+        //$email = 'nitish.dola@gmail.com';
         
         if($email != ''){
 
@@ -220,7 +226,10 @@ class MailsController extends Controller
 
                     $message->to($email);
 
-                    $message->cc(['finance.aaasassam@gmail.com', 'it.sncassam@gmail.com', 'sthapa@mdindia.com']);
+                    if(!empty($cc)) {
+                        $message->cc();
+                    }
+                    
 
                     $message->attach(public_path('excel/exports/'.$sheetname.'.xls'), [
                         'as' => $hospital_name.'.xls',
