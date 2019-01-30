@@ -45,3 +45,6 @@ Route::group(['prefix' => 'hospital'], function () {
     Route::get('/excel/{id}', 'HospitalsController@exportToExcel')->name('hospital.excel.export');
   });
 });
+
+Route::get('/update-data', 'UpdateController@update_data')->name('update_data');
+Route::post('/save-data', 'UpdateController@save_data')->name('save_data');
