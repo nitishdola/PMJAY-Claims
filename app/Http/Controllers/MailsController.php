@@ -84,7 +84,7 @@ class MailsController extends Controller
 			$arr[$k1]['TPA Claim reference No'] = $v1->tpa_claim_reference_number;
 			$arr[$k1]['Date of Admission'] = date('d-m-Y', strtotime($v1->date_of_admission));
 			$arr[$k1]['Date of Discharge'] = date('d-m-Y', strtotime($v1->date_of_discharge));
-			$arr[$k1]['Gross Bill'] = $gross;
+           
 
 			if($deduction == ''){ 
 				$dd = 0; 
@@ -196,14 +196,14 @@ class MailsController extends Controller
 
         $email_arr = explode('/', $emails);
 
-        $email = $email_arr[0];
+        //$email = $email_arr[0];
 
         $cc = []; 
 
         if(env('TEST_MAIL') != '') {
             $email = 'nitish.dola@gmail.com';
         }else{
-            $cc = ['finance.aaasassam@gmail.com', 'sthapa@mdindia.com'];
+            //$cc = ['finance.aaasassam@gmail.com', 'sthapa@mdindia.com'];
         }
         //$email = 'finance.aaasassam@gmail.com';
         //$email = 'nitish.dola@gmail.com';

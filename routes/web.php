@@ -17,6 +17,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'float-data'], function () {
   Route::get('/upload', 'UploadsController@uploadData')->name('float_data.upload');
   Route::post('/save', 'UploadsController@saveAllData')->name('float_data.save');
+  Route::get('/remove/{id}', 'UploadsController@removeData')->name('float_data.remove');
 
 
   Route::get('/edit/{id}', 'ClaimFloatsController@edit')->name('claim_float.edit');
@@ -35,6 +36,10 @@ Route::group(['prefix' => 'float-data'], function () {
 });
 
 Route::group(['prefix' => 'hospital'], function () {
+  Route::get('/create', 'HospitalsController@create')->name('hospital.create');
+  Route::post('/save', 'HospitalsController@save')->name('hospital.save');
+  Route::get('/disable/{id}', 'HospitalsController@disable')->name('hospital.disable');
+
 	Route::get('/', 'HospitalsController@index')->name('hospital.index');
 	Route::get('/{id}/edit', 'HospitalsController@edit')->name('hospital.edit');
 	Route::post('/{id}/update', 'HospitalsController@update')->name('hospital.update');

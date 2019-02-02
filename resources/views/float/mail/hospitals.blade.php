@@ -50,6 +50,7 @@
 
 							$gross = $deduction = $tds = $net = 0;
 							$hospital_data = DB::table('floats')
+											->where('status',1)
 											->where('float_file_id', $float_file_id)
 											->where('hospital_id', $v['id'])
 											->get();

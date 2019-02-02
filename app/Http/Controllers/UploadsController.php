@@ -181,4 +181,13 @@ class UploadsController extends Controller
 
     	return Redirect::route('home')->with(['message' => 'Upload Successfull !', 'alert-class' => 'alert-success']);
     }
+
+
+    public function removeData($id) {
+    	$float_file = FloatFile::find($id);
+    	$float_file->status = 0;
+    	$float_file->save();
+
+    	return Redirect::route('home')->with(['message' => 'Float Removed !', 'alert-class' => 'alert-success']);
+    }
 }
