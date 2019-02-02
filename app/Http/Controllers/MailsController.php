@@ -196,14 +196,14 @@ class MailsController extends Controller
 
         $email_arr = explode('/', $emails);
 
-        //$email = $email_arr[0];
+        $email = $email_arr[0];
 
         $cc = []; 
 
         if(env('TEST_MAIL') != '') {
-            $email = 'nitish.dola@gmail.com';
+            $email = env('TEST_MAIL');
         }else{
-            //$cc = ['finance.aaasassam@gmail.com', 'sthapa@mdindia.com'];
+            $cc = ['finance.aaasassam@gmail.com', 'sthapa@mdindia.com'];
         }
         //$email = 'finance.aaasassam@gmail.com';
         //$email = 'nitish.dola@gmail.com';
