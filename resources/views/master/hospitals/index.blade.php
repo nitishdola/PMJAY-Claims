@@ -41,8 +41,8 @@
 		{!! Form::close() !!}
 	</div>
 	<div class="panel-heading">
-		Hospitals
-		<span class="label label-info pull-right">{{ count($results) }} Items</span>
+		
+		<a class="btn btn-danger btn-sm" href="{{ route('hospital.create') }}">Add New Hospital</a>
 	</div>
 	<div class="padding-md clearfix">
 		@if(count($results))
@@ -57,6 +57,7 @@
 					<th>Total Paid</th>
 					<th>View Details</th>
 					<th>Edit</th>
+					<th>Delete</th>
 				</tr>
 
 			</thead>
@@ -71,7 +72,7 @@
 						<td>{{ $v->email }}</td>
 						<td>{{ $v->phone_number }}</td>
 						<?php
-							$paid = DB::table('floats')->where('hospital_id', $v->id)->sum('net_amount');
+							$paid = DB::table('floats')->where('status',1)->where('hospital_id', $v->id)->sum('net_amount');
 						?>
 						<td>{{ number_format((float)$paid, 2, '.', '') }}</td>
 						<?php $total += $paid; ?>
@@ -80,6 +81,7 @@
 
 						<td><a class="btn btn-xs btn-primary" href="{{ route('hospital.edit', $v->id) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></td>
 
+						<td><a class="btn btn-xs btn-danger" href="{{ route('hospital.disable', $v->id) }}"><i class="fa fa-pencil-square-o" onclick="return confirm('are you sure ?')" aria-hidden="true"></i> Delete</a></td>
 					</tr>
 				@endforeach
 			</tbody>

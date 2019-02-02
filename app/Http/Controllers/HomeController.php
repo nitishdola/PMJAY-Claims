@@ -12,7 +12,7 @@ use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon;
 class HomeController extends Controller
 {
     public function index() {
-    	$results = FloatFile::orderBy('upload_time', 'DESC')->paginate(300);
+    	$results = FloatFile::orderBy('upload_time', 'DESC')->where('status',1)->paginate(300);
     	return view('home', compact('results'));
     }
 }

@@ -36,6 +36,14 @@ class HospitalsController extends Controller
     	return Redirect::route('hospital.index')->with(['message' => 'Updated Successfully !', 'alert-class' => 'alert-success']);
     }
 
+
+    public function disable($id) {
+        $hospital = Hospital::findorFail($id);
+        $hospital->status = 0;
+        $hospital->save();
+        return Redirect::route('hospital.index')->with(['message' => 'Removed Successfully !', 'alert-class' => 'alert-success']);
+    }
+
     public function viewHospitalDetails(Request $request, $id) {
         $where = [];
         $hospital = Hospital::find($id);
@@ -201,6 +209,19 @@ class HospitalsController extends Controller
             
 
         })->download('xls');
+    }
+
+    public function create() {
+        $districts    = District::whereStatus(1)->orderBy('name')->pluck('name', 'id');
+        return view('master.hospitals.create', compact('districts'));
+    }
+
+    public function save(Request $request) {
+        $data = $request->all();
+
+        if($add = Hospital::create($data)) {
+            return Redirect::route('hospital.index')->with(['message' => 'Hospital Added Successfully !', 'alert-class' => 'alert-success']);
+        }
     }
 
 

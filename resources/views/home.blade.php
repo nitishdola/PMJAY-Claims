@@ -25,6 +25,7 @@
 					<th>Float Number</th>
 					<th>Mail Status</th>
 					<th>Upload Time</th>
+					<th>Remove</th>
 				</tr>
 
 			</thead>
@@ -45,6 +46,7 @@
 						</td>
 
 						<td>{{ date('d-m-Y h:i A', strtotime($v->upload_time)) }}</td>
+						<td><a href="{{ route('float_data.remove', $v->id) }}" onclick="return confirm('are you sure ?')" class="btn btn-sm btn-danger">Remove</a></td>
 
 					</tr>
 				@endforeach
