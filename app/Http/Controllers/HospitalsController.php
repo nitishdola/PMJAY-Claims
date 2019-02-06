@@ -17,8 +17,13 @@ class HospitalsController extends Controller
             $where['hospital_type'] = $request->hospital_type;
         }
 
-    	$results = Hospital::where($where)->orderBy('name')->get();
-    	return view('master.hospitals.index', compact('results'));
+        if($request->hospital_id) {
+            $where['id'] = $request->hospital_id;
+        }
+
+        $hospitals = Hospital::where('status', 1)->orderBy('name')->pluck('name', 'id');
+    	$results   = Hospital::where($where)->orderBy('name')->get();
+    	return view('master.hospitals.index', compact('results', 'hospitals'));
     }
 
     public function edit($id) {

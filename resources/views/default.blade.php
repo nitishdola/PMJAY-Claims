@@ -28,6 +28,9 @@
 	<link href="{{ asset('admin/css/app-skin.css') }}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.12/css/bootstrap/zebra_datepicker.min.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
   <link href="{{ asset('admin/css/master.css') }}" rel="stylesheet">
   <!-- Developed and Designed by : Nitish Dolakasharia, nitish.dola@gmail.com, +91-9706125041 -->
 
@@ -170,6 +173,8 @@
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.12/zebra_datepicker.min.js"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 	<script src="{{ asset('admin/js/jquery.dataTables.min.js') }}"></script>
 
 	<script>
@@ -189,6 +194,8 @@
 				"bPaginate": false
 			});
 		    
+		    $('.select2').select2();
+
 		});
 	</script>
 	@yield('pageJs')
