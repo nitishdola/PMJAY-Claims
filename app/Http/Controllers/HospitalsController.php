@@ -48,7 +48,7 @@ class HospitalsController extends Controller
         $where = [];
         $hospital = Hospital::find($id);
         $where['hospital_id'] = $id;
-        $hospital_details = ClaimFloat::where($where)->with('hospital', 'district')->orderBy('date_of_payment', 'ASC')->get();
+        $hospital_details = ClaimFloat::where($where)->with('hospital', 'district')->orderBy('date_of_payment', 'ASC')->where('status',1)->get();
         return view('master.hospitals.details', compact('hospital_details', 'hospital'));
     }
 
@@ -56,7 +56,7 @@ class HospitalsController extends Controller
         $where = [];
         $hospital = Hospital::find($id);
         $where['hospital_id'] = $id;
-        $hospital_details = ClaimFloat::where($where)->with('hospital', 'district')->orderBy('date_of_payment', 'ASC')->get();
+        $hospital_details = ClaimFloat::where($where)->where('status',1)->with('hospital', 'district')->orderBy('date_of_payment', 'ASC')->get();
 
 
         // Send data to the view using loadView function of PDF facade
@@ -71,7 +71,7 @@ class HospitalsController extends Controller
         $where = [];
         $hospital = Hospital::find($id);
         $where['hospital_id'] = $id;
-        $hospital_data = ClaimFloat::where($where)->with('hospital', 'district')->orderBy('date_of_payment', 'ASC')->get();
+        $hospital_data = ClaimFloat::where($where)->where('status',1)->with('hospital', 'district')->orderBy('date_of_payment', 'ASC')->get();
 
         $arr = [];
 
